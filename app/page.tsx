@@ -7,25 +7,21 @@ import { db } from './firebase'
 
 
 export default function Home() {
+
+
+
   const [items, setItems] = useState([
     // {
-    //   name: 'Coffee',
-    //   price: 4.95,
-    // },
-    // {
-    //   name: 'Movie',
-    //   price: 24.95
-    // },
-    // {
-    //   name: 'candy',
-    //   price: 7.95
-    // },
+    //   name: '',
+    //   price: '',
+    // }
+
   ]);
   const [newItem, setNewItem] = useState({ name: '', price: '' })
   const [total, setTotal] = useState(0)
 
   //Add item to database
-  const addItem = async (e) => {
+  const addItem = async (e: React.MouseEvent) => {
     e.preventDefault();
     if (newItem.name !== '' && newItem.price !== '') {
       // setItems([...items, newItem]);
@@ -42,7 +38,8 @@ export default function Home() {
   useEffect(() => {
     const q = query(collection(db, 'items'))
     const unsubscribe = onSnapshot(q, (QuerySnapshot) => {
-      let itemsArr = []
+      let itemsArr = [];
+
 
       QuerySnapshot.forEach((doc) => {
         itemsArr.push({ ...doc.data(), id: doc.id })
